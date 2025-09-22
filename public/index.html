@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách KhoLT</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <h1>Danh sách KhoLT</h1>
+  <table id="khoTable">
+    <thead>
+      <tr>
+        <th>Mã</th>
+        <th>Tên</th>
+        <th>Sức Chứa</th>
+        <th>Địa Chỉ</th>
+        <th>Nhân Viên Quản Lý</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    // Gọi API Node.js để lấy dữ liệu
+    fetch("/kho")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#khoTable tbody");
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.KhoID || ""}</td>
+            <td>${row.TenKho || ""}</td>
+            <td>${row.SucChua || ""}</td>
+            <td>${row.DiaChi || ""}</td>          
+            <td>${row.NhanVienQuanLy || ""}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(err => console.error("Lỗi:", err));
+  </script>
+</body>
+</html>
